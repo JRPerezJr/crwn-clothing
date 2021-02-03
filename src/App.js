@@ -1,17 +1,17 @@
 import React from 'react';
+import './App.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { Header } from './components/header/header';
+import Header from './components/header/header';
 import ShopPage from './components/shop/shop';
 import HomePage from './pages/hompage/homepage';
-import { SignInAndOutPage } from './pages/sign-in-sign-out/sign-in-signout';
+import { SignInAndUpPage } from './pages/sign-in-sign-out/sign-in-and-sign-up';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
 
-import './App.css';
 class App extends React.Component {
   unsubscribeFromAuth = null;
   componentDidMount() {
@@ -46,11 +46,7 @@ class App extends React.Component {
             exact
             path="/signin"
             render={() =>
-              this.props.currentUser ? (
-                <Redirect to="/" />
-              ) : (
-                <SignInAndOutPage />
-              )
+              this.props.currentUser ? <Redirect to="/" /> : <SignInAndUpPage />
             }
           />
         </Switch>
