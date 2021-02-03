@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-const firebaseConfig = {
+const config = {
   apiKey: 'AIzaSyBSRXT8AKmmU07M3wEk4FEqcaJqWwXaNRY',
   authDomain: 'crown-dd-f2377.firebaseapp.com',
   projectId: 'crown-dd-f2377',
@@ -10,6 +10,8 @@ const firebaseConfig = {
   messagingSenderId: '65829223206',
   appId: '1:65829223206:web:acb3af5d17428213055fe7',
 };
+
+firebase.initializeApp(config);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
@@ -34,8 +36,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
-
-firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
