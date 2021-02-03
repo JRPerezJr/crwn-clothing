@@ -1,30 +1,36 @@
 import React from 'react';
-import './header.styles.scss';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
+import './header.styles.scss';
 
 export const Header = ({ currentUser }) => (
-  <div className='header'>
-    <Link className='logo-container' to='/'>
-      <Logo className='logo' />
+  <div className="header">
+    <Link className="logo-container" to="/">
+      <Logo className="logo" />
     </Link>
-    <div className='options'>
-      <Link className='option' to='/shop'>
+    <div className="options">
+      <Link className="option" to="/shop">
         shop
       </Link>
-      <Link className='option' to='/contact'>
+      <Link className="option" to="/contact">
         contact
       </Link>
       {currentUser ? (
-        <div className='option' onClick={() => auth.signOut()}>
+        <div className="option" onClick={() => auth.signOut()}>
           Sign out
         </div>
       ) : (
-        <Link className='option' to='/signin'>
+        <Link className="option" to="/signin">
           Sign in
         </Link>
       )}
     </div>
   </div>
 );
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+});
+
+connect(mapStateToProps)(Header);
