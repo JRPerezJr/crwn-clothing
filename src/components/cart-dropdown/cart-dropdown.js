@@ -1,6 +1,6 @@
 import React from 'react';
-import './cart-dropdown.styles.scss';
 import { CustomButton } from '../custom-button/custom-button';
+import './cart-dropdown.styles.scss';
 
 export const CartDropdown = () => (
   <div className="cart-dropdown">

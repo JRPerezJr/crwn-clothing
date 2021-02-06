@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import './App.css';
 
 import Header from './components/header/header';
 import ShopPage from './components/shop/shop';
