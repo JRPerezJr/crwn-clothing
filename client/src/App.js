@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import './App.css';
+
+import { connect } from 'react-redux';
+
+import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header';
 import ShopPage from './pages/shop/shop';
 import HomePage from './pages/hompage/homepage';
 import SignInAndUpPage from './pages/sign-in-sign-out/sign-in-and-sign-up';
-import { connect } from 'react-redux';
-
-import { createStructuredSelector } from 'reselect';
+import CheckoutPage from './pages/checkout/checkout';
 
 import { selectCurrentUser } from './redux/user/user.selector';
-import CheckoutPage from './pages/checkout/checkout';
 import { checkUserSession } from './redux/user/user.actions';
+
+import { GlobalStyle } from './global.styles';
 
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
@@ -21,6 +23,7 @@ const App = ({ checkUserSession, currentUser }) => {
 
   return (
     <div>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
