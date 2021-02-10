@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -6,16 +6,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header';
-import ShopPage from './pages/shop/shop';
-import HomePage from './pages/hompage/homepage';
-import SignInAndUpPage from './pages/sign-in-sign-out/sign-in-and-sign-up';
-import CheckoutPage from './pages/checkout/checkout';
 
 import { selectCurrentUser } from './redux/user/user.selector';
 import { checkUserSession } from './redux/user/user.actions';
 
 import { GlobalStyle } from './global.styles';
+import Spinner from './components/spinner/spinner';
 
+const HomePage = lazy(() => import('./pages/hompage/homepage'));
+const ShopPage = lazy(() => import('./pages/shop/shop'));
+const SignInAndUpPage = lazy(() =>
+  import('./pages/sign-in-sign-out/sign-in-and-sign-up')
+);
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout'));
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
     checkUserSession();
@@ -26,16 +29,18 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/shop" component={ShopPage} />
-        <Route exact path="/checkout" component={CheckoutPage} />
-        <Route
-          exact
-          path="/signin"
-          render={() =>
-            currentUser ? <Redirect to="/" /> : <SignInAndUpPage />
-          }
-        />
+        <Suspense fallback={<Spinner />}>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              currentUser ? <Redirect to="/" /> : <SignInAndUpPage />
+            }
+          />
+        </Suspense>
       </Switch>
     </div>
   );
